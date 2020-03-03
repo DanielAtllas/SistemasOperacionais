@@ -22,10 +22,24 @@
 			<br>
 			<li><strong>Terminated</strong> - Estado em que o processo se encontra executado, ou seja, momento que o processo termina 100% de sua execução, voltando a ser um programa estático.</li>
 		</ul>
-		<p>Para que ocorra essa mudança de estado de um processo, eventos são ocorridos durante a sua execução, podendo ser realizados pelo usuário ou pelo próprio sistema , ou seja, a partir de uma intereção direta com um processo durante sua execução (evento), o processo irá mudar de um estado para outro. No sistema, para que um processo seja jogado para o estado de execução, o procesador necessita está liberado (nenhum outro processo se encontra executando no momento).</p>
+		<p>Para que ocorra essa mudança de estado de um processo, <strong>eventos</strong> são ocorridos durante a sua execução, podendo ser realizados pelo usuário ou pelo próprio sistema , ou seja, a partir de uma intereção direta com um processo durante sua execução (evento), o processo irá mudar de um estado para outro. No sistema, para que um processo seja jogado para o estado de execução, o procesador necessita está liberado (nenhum outro processo se encontra executando no momento) e isso é realizado pelo <strong>escalonador</strong>.</p>
 		<p>Para um melhor entendimento dessa mudança de estados de um processo, segue uma imagem abaixo ilustrando esses eventos:</p>
 		<img src="https://www.researchgate.net/publication/332546783/figure/fig3/AS:749937696464896@1555810488119/Process-state-transition-diagram.png">
-		
+		<p>A modelagem de um processo se dá pelo <strong>BCP</strong> (Bloco de Controle de Processos), que segue exatamente o mesmo conceito de <strong>structs</strong>, necessitando de dados como:</p>
+		<ol>
+			<li>Process State</li>
+			<br>
+			<li>Process Number</li>
+			<br>
+			<li>Program Counter</li>
+			<br>
+			<li>Registers</li>
+			<br>
+			<li>Memory Limits</li>
+			<br>
+			<li>List of Open Files</li>
+			<br>
+		</ol>
 	</body>
 </html>
 
