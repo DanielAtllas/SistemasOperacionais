@@ -1,1 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Estrutura do S.O. - S.O.</title>
+        <meta name="description" content="Este é um site referênte à estudos sobre S.O.">
+    </head>
+    
+    <body>
+		<h1>Processos - S.O.</h1>
+		<p> Podem exister N formas de execução de um processo, como agendamentos (<i>bacth</i>), interação do usuário e <i>time-sharing</i> (processos são executados ao término de outro). Um processo pode ser executado individualmente ou através de vários processos em execução, os chamados <strong>jobs</strong>. Além disso, os processos são compostos de contadores de programas (registrador PC), Pilha (área de memória alocada), <i>Heap</i> (área alocada dinâmicamente), sessões de dados (variáveis globais) e sessões de código (programa/script)</p>
+		<p> Além disso, os processos poossuem <strong>estados do processo</strong> que mapealizam a situação atual de um processo. Diante disso, um processo pode se encontrar:</p>
+		<ul>
+			<li><strong>New</strong> - O estado de criação do processo, ou seja, momento em que o um programa deixa de estático para ser executado.</li>
+			<li><strong>Ready</strong> - Estado inicial em que um processo se encontra, ou seja, momento em que um processo está após ser chamado, na fila aguardando seu momento de execução.</li>
+			<li><strong>Running</strong> - Este é o estado de execução do processo, ou seja, momento em que o processo se encontra realizando suas tarefas.</li>
+			<li><strong>Waiting</strong> - Momento em que o processo está aguardando sua execução. Em alguns processadores, existe a possibilidade de processos compartilharem sua execução, onde um processo X executa 20% de sua execução e libera para que um processo Y execute seus 20% e assim por diante até que ambos executem 100%. Esse momento de troca de processo, faz com que o processo saia do seu estado de <i>running</i> para <i>waiting</i> (aguardando execução).</li>  
+			<li><strong>Terminated</strong> - Estado em que o processo se encontra executado, ou seja, momento que o processo termina 100% de sua execução, voltando a ser um programa estático.</li>
+		</ul>
+		<p>Para que ocorra essa mudança de estado de um processo, eventos são ocorridos durante a sua execução, podendo ser realizados pelo usuário ou pelo próprio sistema , ou seja, a partir de uma intereção direta com um processo durante sua execução (evento), o processo irá mudar de um estado para outro. No sistema, para que um processo seja jogado para o estado de execução, o procesador necessita está liberado (nenhum outro processo se encontra executando no momento).</p>
+		<p>Para um melhor entendimento dessa mudança de estados de um processo, segue uma imagem abaixo ilustrando esses eventos:</p>
+		<img src="https://www.researchgate.net/publication/332546783/figure/fig3/AS:749937696464896@1555810488119/Process-state-transition-diagram.png">
+		
+	</body>
+</html>
 
