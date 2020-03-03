@@ -8,56 +8,53 @@
     </head>
     
     <body>
-	<h1>SISTEMAS OPERACIONAIS </h1>
-
-	<p>Esta disciplina proporciona uma visão geral dos principais componentes do S.O.</p>
-	<ul>
-		<li>Conteúdos:</li>
-		<ol>
-			<li>Visão Geral de S.O.</li>
-			<li>Princípios de S.O.</li>
-			<li>Threads</li>
-			<li>Escalonamento de Processos</li>
-			<li>Gerência de Memória</li>
-			<li>Gerência de Dispositivos de I/O</li>
-			<li>Sistemas de Arquivos</li>
-		</ol>
-	</ul>	
-	<hr>
-	<p>Um sistema operacional é uma interface entre o usuário e o haware ed um computador, onde seu objetivo não é apenas o uso de um S.O., mas sim, como o sistema gerência os recursos e seu funcionamento, tendo objetivos como:</p>
-	<ul>
-		<li>Executar programas de usuário e tornar a solução de problemas mais fácil;</li>
-		<li>Tornar os sistemas computacionais convenientes ao uso;</li>
-		<li>Usar o hardware do computador de maneira eficiente.</li>
-	</ul>
-	<p>Gerênciando o hardware através do S.O. além de suas distribuições, como dispositivos de entrada e saída de dados (PenDrive), executando através de rotinas seus objetivos declarados por um usuário. Além disso, faz acessos e chamadas a processos (programas) e funções do computador. Os sistemas operacionais mais conhecidos atualmente, são: Windows, Linux e Mac, sendo os principais e com mais peso usual no mercado. Ou seja, um S.O. têm como maior objetivo o gerênciamento da máquina em questão (hardware) gerando uma interface de possibilidades para o usuário em relação à máquina.</p>
-	<p>Durante a execução de algum processo, a máquina em conjunto do S.O. executa dois passos:</p>
-	<ul>
-		<li>Máquina Abstrata</li>
-        <p>Este realiza os comandos via  script do desejado, como por exemplo ao <strong>abrir um arquivo</strong>: <i>fd = fopen("arquivo",modo)</i> e <strong>ler um arquivo</strong>: <i>fread(buf, Nbytes, Nregs, fd);</i>.</p>
-		<li>Máquina Física</li>
-			<p>Realiza os procedimentos enquanto máquina, como:</p>
-			<ol>
-				<li>Verificar se o motor do disco está ligado</li>
-				<li>Posicionar o braço mecânico (bloco, setor, trilha)</li>
-				<li>Recuperar o dado</li>
-				<li>Colocar o dado na posição indicada de memória</li>
-			</ol>
-	</ul>
-    <p>Um programador, normalmente, não deseja tratar dos detalhes citados acima, assim como o mesmo, teoricamente, não pode tratar desses detalhes. Logo, a <strong>máquina estendida</strong> "esconde" a complexidade do hardware e protege o usuário, como medidas de velocidade, processamento e até mesmo segurança (Sistemas Operacionais como o Linux, disponibilizam um certo "poder" muito grande à seus usuários).</p>
-    <p> Como dito anteriormente, o S.O. funciona como um <strong>gerente de recursos</strong>, onde o computador é um conjunto de recursos que serão compartilhados, possuindo recursos <strong>físicos</strong> (processadores, memórias, etc) e <strong>abstratos</strong> (processos, arquivos, etc). Esses processos, são programas enquanto estão em execução, ou seja, ao se executar um programa e o mesmo estiver aberto, ele é chamado de <strong>processo</strong>, assim como quando o mesmo é finalizado, deixa de ser um processo voltando a ser um programa.</p>
-	<p>Além disso, o sistema deve ter um <strong>controle dos recursos</strong>, como manter informações sobre o uso desses recursos (endereço, estado e etc), decidir quem pode acessar tal recurso e alocar/liberar o recurso.</p>
-	<p>O S.O. possui algumas classificações e formas de se referir a ele, onde existem sistemas:</p>
-	<ul>
-		<li><strong>monoprogramados</strong> (só executa um processo por vez) e <strong>Multiprogramados</strong> (permite a execução de N processos simultaneamente).</li>
-		<li>Sistemas <strong>interativos</strong> (sistemas com a possibilidade de interação com o mesmo, ao solicitar algo, uma resposta é gerada, chamado de <strong>tempo de resposta</strong>) e <strong>não-interativos</strong> (Sistemas que executam mas não necessitam da interação do usuário, ou seja, sistemas que demandam da mínima intervenção de um usuário).</li>
-		<li>Sistemas de <strong>tempo compartilhado</strong> (ou <i>time sharing</i>), sendo utilizado por sistemas interativos.</li>
-	</ul>
-	<p>Outro conceito importante dos sistemas operacionais, é a forma de interface com o usuário, onde os sistemas operacionais oferecem uma interface via <strong>CLI (Comand Line Interface - linha de comando)</strong> como o Linux-Shell, e outras que possuem uma <strong>GUI (interface gráfica)</strong>, facilitando o uso do sistema, como o Windows.</p>
-	<p>Os S.O. geralmente são dirigidos por <strong>interrupções</strong>, possibilitando que pare um processo e execute outro solicitado, ou seja, possuem a capacidade de minimizar a execução do S.O. e inatividade do mesmo caso nenhuma solicitação seja exigida, seja ela via processo, usuário ou I/O, logo, qualquer dispositivo de interação com o processador (mouse, teclado, HD e etc) pode gerar uma interrupção no prcessador, onde ele para de fazer sua tarefa rotineira para atender a solicitação de I/O. Diante disso, os sistemas operacionais possuem dois modos de operação, o modo <strong>Kernel</strong>, onde qualquer instrução é válida, onde apenas rotinas do sistema são de modo Kernel e o modo <strong>user</strong> onde o processador só pode executar apenas algumas execuções. Essa troca de modos é feita pela <strong>chamada de sistema</strong>, com uma instrução <i>return</i> por exemplo.</p>
-	<p>Quando um processador roda no tipo <i>User</i>, ele se torna restrito a praticamente todas as instruções (onde algumas execuções dependem da permissão), já no modo Kernel, é possível realizar qualquer instrução. A mudança de um modo para outro, é realizada através da <strong>chamada de sistema</strong>. Além disso, as rotinas do sistema operacional de encontram realizadas pelo modo Kernel.</p>
-	<p>Ou seja, tanto o modo <i>User</i>, como o modo Kernel, possuem permissões de execuções, mudando apenas o poder de permissão que cada um possui. Logo, comandos como I/O, execução de programas e etc, são realizados pelo Kernel, gerenciando os recursos do sistema operacional, que por sua vez, gerência o hardware. </p>
-	<p>Um exemplo dessa mudança por chamada de função, se dá na implementação de scripts de programação, onde ao escrever um comando <i>printf()</i> (feito pelo usuário, ou seja, modo <i>User</i>) gera um comando na biblioteca C que realiza execução no hardware e no sistema diretamente (executados pelo modo kernel)</p>
-		
+	   <h1>SISTEMAS OPERACIONAIS </h1>
+    
+	   <p>Esta disciplina proporciona uma visão geral dos principais componentes do S.O.</p>
+	   <ul>
+	   	<li>Conteúdos:</li>
+	   	<ol>
+	   		<li>Visão Geral de S.O.</li>
+	   		<li>Princípios de S.O.</li>
+	   		<li>Threads</li>
+	   		<li>Escalonamento de Processos</li>
+	   		<li>Gerência de Memória</li>
+	   		<li>Gerência de Dispositivos de I/O</li>
+	   		<li>Sistemas de Arquivos</li>
+	   	</ol>
+	   </ul>	
+	   <hr>
+	   <p>Um sistema operacional é uma interface entre o usuário e o haware ed um computador, onde seu objetivo não é apenas o uso de um S.O., mas sim, como o sistema gerência os recursos e seu funcionamento, tendo objetivos como:</p>
+	   <ul>
+	   	<li>Executar programas de usuário e tornar a solução de problemas mais fácil;</li>
+	   	<li>Tornar os sistemas computacionais convenientes ao uso;</li>
+	   	<li>Usar o hardware do computador de maneira eficiente.</li>
+	   </ul>
+	   <p>Gerênciando o hardware através do S.O. além de suas distribuições, como dispositivos de entrada e saída de dados (PenDrive), executando através de rotinas seus objetivos declarados por um usuário. Além disso, faz acessos e chamadas a processos (programas) e funções do computador. Os sistemas operacionais mais conhecidos atualmente, são: Windows, Linux e Mac, sendo os principais e com mais peso usual no mercado. Ou seja, um S.O. têm como maior objetivo o gerênciamento da máquina em questão (hardware) gerando uma interface de possibilidades para o usuário em relação à máquina.</p>
+	   <p>Durante a execução de algum processo, a máquina em conjunto do S.O. executa dois passos:</p>
+	   <ul>
+	   	<li>Máquina Abstrata</li>
+            <p>Este realiza os comandos via  script do desejado, como por exemplo ao <strong>abrir um arquivo</strong>: <i>fd = fopen("arquivo",modo)</i> e <strong>ler um arquivo</strong>: <i>fread(buf, Nbytes, Nregs, fd);</i>.</p>
+	   	<li>Máquina Física</li>
+	   		<p>Realiza os procedimentos enquanto máquina, como:</p>
+	   		<ol>
+	   			<li>Verificar se o motor do disco está ligado</li>
+	   			<li>Posicionar o braço mecânico (bloco, setor, trilha)</li>
+	   			<li>Recuperar o dado</li>
+	   			<li>Colocar o dado na posição indicada de memória</li>
+	   		</ol>
+	   </ul>
+        <p>Um programador, normalmente, não deseja tratar dos detalhes citados acima, assim como o mesmo, teoricamente, não pode tratar desses detalhes. Logo, a <strong>máquina estendida</strong> "esconde" a complexidade do hardware e protege o usuário, como medidas de velocidade, processamento e até mesmo segurança (Sistemas Operacionais como o Linux, disponibilizam um certo "poder" muito grande à seus usuários).</p>
+        <p> Como dito anteriormente, o S.O. funciona como um <strong>gerente de recursos</strong>, onde o computador é um conjunto de recursos que serão compartilhados, possuindo recursos <strong>físicos</strong> (processadores, memórias, etc) e <strong>abstratos</strong> (processos, arquivos, etc). Esses processos, são programas enquanto estão em execução, ou seja, ao se executar um programa e o mesmo estiver aberto, ele é chamado de <strong>processo</strong>, assim como quando o mesmo é finalizado, deixa de ser um processo voltando a ser um programa.Além disso, o sistema deve ter um <strong>controle dos recursos</strong>, como manter informações sobre o uso desses recursos (endereço, estado e etc), decidir quem pode acessar tal recurso e alocar/liberar o recurso.</p>
+	   <p>O S.O. possui algumas classificações e formas de se referir a ele, onde existem sistemas:</p>
+	   <ul>
+	   	<li><strong>monoprogramados</strong> (só executa um processo por vez) e <strong>Multiprogramados</strong> (permite a execução de N processos simultaneamente).</li>
+	   	<li>Sistemas <strong>interativos</strong> (sistemas com a possibilidade de interação com o mesmo, ao solicitar algo, uma resposta é gerada, chamado de <strong>tempo de resposta</strong>) e <strong>não-interativos</strong> (Sistemas que executam mas não necessitam da interação do usuário, ou seja, sistemas que demandam da mínima intervenção de um usuário).</li>
+	   	<li>Sistemas de <strong>tempo compartilhado</strong> (ou <i>time sharing</i>), sendo utilizado por sistemas interativos.</li>
+	   </ul>
+	   <p>Outro conceito importante dos sistemas operacionais, é a forma de interface com o usuário, onde os sistemas operacionais oferecem uma interface via <strong>CLI (Comand Line Interface - linha de comando)</strong> como o Linux-Shell, e outras que possuem uma <strong>GUI (interface gráfica)</strong>, facilitando o uso do sistema, como o Windows.</p>
+	   <p>Os S.O. geralmente são dirigidos por <strong>interrupções</strong>, possibilitando que pare um processo e execute outro solicitado, ou seja, possuem a capacidade de minimizar a execução do S.O. e inatividade do mesmo caso nenhuma solicitação seja exigida, seja ela via processo, usuário ou I/O, logo, qualquer dispositivo de interação com o processador (mouse, teclado, HD e etc) pode gerar uma interrupção no prcessador, onde ele para de fazer sua tarefa rotineira para atender a solicitação de I/O. Diante disso, os sistemas operacionais possuem dois modos de operação, o modo <strong>Kernel</strong>, onde qualquer instrução é válida, onde apenas rotinas do sistema são de modo Kernel e o modo <strong>user</strong> onde o processador só pode executar apenas algumas execuções. Essa troca de modos é feita pela <strong>chamada de sistema</strong>, com uma instrução <i>return</i> por exemplo.</p>
+	   <p>Quando um processador roda no tipo <i>User</i>, ele se torna restrito a praticamente todas as instruções (onde algumas execuções dependem da permissão), já no modo Kernel, é possível realizar qualquer instrução. A mudança de um modo para outro, é realizada através da <strong>chamada de sistema</strong>. Além disso, as rotinas do sistema operacional de encontram realizadas pelo modo Kernel. Ou seja, tanto o modo <i>User</i>, como o modo Kernel, possuem permissões de execuções, mudando apenas o poder de permissão que cada um possui. Logo, comandos como I/O, execução de programas e etc, são realizados pelo Kernel, gerenciando os recursos do sistema operacional, que por sua vez, gerência o hardware. </p>
+	   <p>Um exemplo dessa mudança por chamada de função, se dá na implementação de scripts de programação, onde ao escrever um comando <i>printf()</i> (feito pelo usuário, ou seja, modo <i>User</i>) gera um comando na biblioteca C que realiza execução no hardware e no sistema diretamente (executados pelo modo kernel). Entenda essa chamada de sistema como uma interface com os serviçoes que o sistema oferece.</p>
 	</body>
 </html>
