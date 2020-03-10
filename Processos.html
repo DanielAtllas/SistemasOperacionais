@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Estrutura do S.O. - S.O.</title>
+        <meta name="description" content="Este é um site referênte à estudos sobre S.O.">
+    </head>
+    
+    <body>
+        <h1>Processos - S.O.</h1>
+        <p> Podem exister N formas de execução de um processo, como agendamentos (<i>bacth</i>), interação do usuário e <i>time-sharing</i> (processos são executados ao término de outro). Um processo pode ser executado individualmente ou através de vários processos em execução, os chamados <strong>jobs</strong>. Além disso, os processos são compostos de contadores de programas (registrador PC), Pilha (área de memória alocada), <i>Heap</i> (área alocada dinâmicamente), sessões de dados (variáveis globais) e sessões de código (programa/script)</p>
+        <p>Dessa forma, um processador só possui a capacidade de executar apenas um processo por vez. Porém, atualmente com os avanços tencnológicos, um processador em conjunto com os demais hardwares, consegue executar um processo em um curto período de tempo, tempo esse extremamente veloz, abrindo a possibilidade de outro processo ser executado em seguida. Essa contínua execução de processos de forma rápida, passa a empressão de que processos estão ativos simultaneamente, criando assim os chamados processadores/computadores/sistemas multiprogramados. Este conceito é de extrema importância, pois um processo só pode ser iniciado quando outro terminar seu acesso à CPU (não necessariamente terminar 100% de sua execução, mas terminar seu período de acesso à CPU). Para facilitar o entendimento deste conceito, imagine que 2 processos estão prontos para execução, o processo X executa 20% de suas tarefas (acessos de CPU e IO) e após isso fica em um estado de espera, dando à vez ao processo Y que executa 20% e assim por diante, até que ambos processos tenham executado 100% de suas tarefas (Entenda que a quantidade de tarefas/ tempo de execução de um processo é relativo ao outro. Dessa forma, um pode terminar sua execução mais rápido que outro).</p>    
+        <p> Além disso, os processos poossuem <strong>estados do processo</strong> que mapealizam a situação atual de um processo. Diante disso, um processo pode se encontrar:</p>
+        <ul>
+            <li><strong>New</strong> - O estado de criação do processo, ou seja, momento em que o um programa deixa de estático para ser executado.</li>
+            <br>
+            <li><strong>Ready</strong> - Estado inicial em que um processo se encontra, ou seja, momento em que um processo está após ser chamado, na fila aguardando seu momento de execução.</li>
+            <br>
+            <li><strong>Running</strong> - Este é o estado de execução do processo, ou seja, momento em que o processo se encontra realizando suas tarefas.</li>
+            <br>
+            <li><strong>Waiting</strong> - Momento em que o processo está aguardando sua execução. Em alguns processadores, existe a possibilidade de processos compartilharem sua execução, onde um processo X executa 20% de sua execução e libera para que um processo Y execute seus 20% e assim por diante até que ambos executem 100%. Esse momento de troca de processo, faz com que o processo saia do seu estado de <i>running</i> para <i>waiting</i> (aguardando execução).</li>  
+            <br>
+            <li><strong>Terminated</strong> - Estado em que o processo se encontra executado, ou seja, momento que o processo termina 100% de sua execução, voltando a ser um programa estático.</li>
+        </ul>
+        <p>Para que ocorra essa mudança de estado de um processo, <strong>eventos</strong> são ocorridos durante a sua execução, podendo ser realizados pelo usuário ou pelo próprio sistema , ou seja, a partir de uma intereção direta com um processo durante sua execução (evento), o processo irá mudar de um estado para outro. No sistema, para que um processo seja jogado para o estado de execução, o procesador necessita está liberado (nenhum outro processo se encontra executando no momento) e isso é realizado pelo <strong>escalonador</strong>.</p>
+        <p>Para um melhor entendimento dessa mudança de estados de um processo, segue uma imagem abaixo ilustrando esses eventos:</p>
+        <img src="https://www.researchgate.net/publication/332546783/figure/fig3/AS:749937696464896@1555810488119/Process-state-transition-diagram.png">
+        <p>A modelagem de um processo se dá pelo <strong>BCP</strong> (Bloco de Controle de Processos), que segue exatamente o mesmo conceito de <strong>structs</strong>, necessitando de dados como:</p>
+        <ol>
+            <li>Process State</li>
+            <br>
+            <li>Process Number</li>
+            <br>
+            <li>Program Counter</li>
+            <br>
+            <li>Registers</li>
+            <br>
+            <li>Memory Limits</li>
+            <br>
+            <li>List of Open Files</li>
+            <br>
+        </ol>
+        <p>Ou seja, um programa enquanto processo, possui o BCP como medidadas de dados para atualização do mesmo enquanto execução. Este Bloco de Controle de Processo funciona como uma estrutura de dados no núcleo do sistema operacional, servindo como armazenamento de informações necessárias para tartar um determinado processo, ficando em uma área da memória protegida do acesso de usuários.</p>
+        <p>Além disso, ps processos podem possuir <strong>subprocessos e <i>threads</i></strong>, onde:</p>
+        <ul>
+            <li><strong>Subprocessos</strong></li>
+                <p>São processos criados por um outro processo, de maneira hierárquica, ou seja, são basicamente <strong>processos filhos/gerados de um processo pai/gerador</strong>. Sendo eliminados quando o processo pai/gerador deixar de existir (como um efeito cascata, bastando um <i>kill</i> em um processo, fazendo com que todos os seus sucessores morram em conjunto).</p>
+            <li><strong>Thread</strong></li>
+                <p>Cada processo pode responder a várias solicitações concorrentes ou simuiltâneas (caso haja mais de um processador), nisso as <i>threads</i> compartilham o processador da mesma forma que um processo, onde cada <i>thread</i> possui seu próprio conjunto de registradores. Ou seja, essas chamadas <i>threads</i> <strong>definem o funcionamento de um processador</strong>, recebendo e executando instruções.</p>
+        </ul>
+        <p>Um processo passa por várias filas de seleção durante sua execução, onde o sistema operacional deve selecionar processos das filas de execução para serem executados (para fins de alocação de recursos). Este procedimento de eslacar um processo é realizado por programas chamados de <strong>escalonadores de processos</strong>, que como dito anteriormente, possuem a função de escalar um processo da fila para ser executado. Ou seja, o escalonador escolhe processos do repositório e os carrega na memória para execução. Além disso, existem também os <strong>escalonadores de CPU</strong> que selecionam um dentre os processos que estão prontos para serem executados e aloca a CPU a esse processo, sendo utilizado de maneira bastante frequente.</p>
+        <h3>Criação de Processos</h3>
+            <p>O procedimento de criação de um processo se dá naturalmente pela chamada de um programa através de instruções/comandos do usuário ou do próprio sistema. Porém, existe também o modo de criação de um processo através de uma "gestação", ou seja, um processo X durante sua execução, pode dar inicio a execução de um segundo processo, os quais são chamados de <strong>processos filhos</strong> (Processo X = Processo pai) não estando restrito a quantidade de filhos que se pode gerar, assim como um processo filho também possui a capacidade de gerar outros N processos filhos.</p>
+            <p>Esses processos de gorma geral, possuem um identificador unívoco dentro do sistema, os chamados <strong>PID</strong> e além disso, possuem 3 modos de <strong>compartlhamento de recursos</strong>. Onde:</p>
+        <ol>
+            <li>Um processo filho receber , de forma hereditária, os exatos mesmos recursos que seu processo pai possuia.</li>
+            <br>
+            <li>Um processo filho compartilha de apenas um subconjunto dos recursos de seu processo pai.</li>
+            <br>
+            <li>Um processo filho não compartilha recurso algum de seu processo pai.</li>
+        </ol>
+            <p>Em termos de <strong>execução</strong>, um processo pai e filho podem carregar uma execução concorrente (por <i>time-sharing</i>), onde cada um executa parte de suas tarefas até que ambos sejam concluídos ou de uma forma hierárquica, onde um processo pai só volta a seu modo de execução e é finalizado, quando o seu processo filho terminar completamente sua execução. Além disso, também há a possibilidade de existência de <strong>processos zumbis</strong>, os quais mesmos após terminarem suas tarefas de execução, não são devidamente finalizados (restando um certo lixo de execução dos mesmos, não finalizando completamente).</p>
+            <img src="https://miro.medium.com/max/2544/1*Wd5dYmUVf3g5YucGcody_w.png">
+            
+    </body>
+</html>
