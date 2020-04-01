@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Threads - S.O.</title>
+        <meta name="description" content="Este é um site referente à estudos de Estrutura de Dados">
+    </head>
+    <body>
+        <h1>Threads - Sistemas Opreacionais</h1>
+        <p>As chamadas <i>Threads</i> estão diretamente relacionadas aos processos que são trabalhados em um sistema operacional, ondepodem ser tidas como <strong>linhas de execução de um pocesso</strong>, criadas enquanto um processo está em seu período de execução, permitindo uma maior concorrênia na execução dos mesmos. De forma geral, pode ser entendido que enquanto um processo corresponde ao ambiente do sistema, a <i>thread</i> correspnde ao <strong>estado de execução</strong>, onde um processo pode conter 1 ou mais <i>threads</i> (multi-threads). Diante disso, assim como os processos, as <i>threads</i> possuem um "corpo" de operadores que à compõe, sendo eles:</p>
+        <ul>
+            <li><strong>PC</strong> - Contador de programa</li>
+            <br>
+            <li><strong>SP</strong> - Apontador de pilha</li>
+            <br>
+            <li><strong>PSW</strong> - Estado de execução</li>
+            <br>
+            <li><strong>Conjunto de registradores</strong></li>
+            <br>
+        </ul>
+        <p>Esses componentes, fazem com que as <i>threads</i> sejam utilizadas para que múltplas execuções ocorram no mesmo ambiente do processo, tornando assim, sua execução mais rápida até a conclusão. Como cada <i>thread</i> pode ter acesso a qualquer endereço de memória dentro o epaço de endereçamento do processo, uma <i>thread</i> pode ler, escrever e/ou apagar uma SP de outra <i>thread</i>. Além disso, as<i>threads</i> recebem algus dos operadores de um processo, sendo itens compartilhados por todas as <i>threads</i> em um processo:</p>
+        <ul>
+            <li>Espaço de endereçamento</li>
+            <br>
+            <li>Variáveis globais</li>
+            <br>
+            <li>Arquivos</li>
+            <br>
+            <li>Processos filhos</li>
+            <br>
+        </ul>
+        <p>Logo, as <i>threads</i> <strong>compartilham o processador da mesma formma que processos</strong>, passando também por mudanças de estado (running, waiting e ready). Por exemplo, quando uma <i>thread</i> espera uma operação de leitura de arquivo enquanto uma outra <i>thread</i> está sendo executada. Essa troca de contexto, é r ealizada as operações dos itens de SP (contador de programa) e o SP (Apontador de pilha). Essas são implementadas internamente na memória prinipal através de um estrutura de dados chamadas <strong>TCP</strong>, o qual amazena informações relacionadas as <i>threads</i> como prioridade, estado de execução e bits de estado.</p>
+        <ul>
+            <li><strong>Ambiente Mono-thread</strong></li>
+                <p>Um programa é uma sequência de instruções chamadas por procedimentos e funções. Em um ambiente mono-thread, um processo suporta apenas 1 único programa rodar em seu espaço de endereçamento. Nesse ambiente, os sistemas concorrentes são imlementaos com o uso de múltiplos processos independentes ou subprocessos. O problema, é que quanto maisprocessos em execução pelo sistema operacional, mais recursos são consumidos por estes processos. Desalocando esses recursos apenas ao término da execução do processo.</p>
+                <p>Outro problema, é que como os processos são independentes, cada um tem seu póprio espaço de endereçamento e por isso a comunicação entre os processos, se torna mais difícil e mais lenta de ser realizada. Assim como, o compoartilhamento de recursos, onde cada processo possui seu póprio contexto de hardware, software e espaço de endereçamento.</p>
+            <li><strong>Ambiente Multi-thread</strong></li>
+                <p>Em ambientes com múltiplos theads, não existe a idéia de programas associados a processos, pois estes, serão associados diretamente as <i>threads</i> e mais <i>threads</i> podem ser adicionadas a umprocesso. Neste caso, o espaço de endereçamento do processo é compartilhado por tofas as <i>threads</i> associadas ao processo em questão, ou seja, por conter N <i>threads</i>, o sistema consegue agilizar o tempo de execução de um processo dividindo-o em mais de 1 <i>thread</i>, executando de forma parelala a um programa.</p>
+                <p>Em ambientes multi-threads, cada processo pode responder a várias solicitações concorrentemente ou mesmo simultaneamente, no caso de haver mais de 1 processo. Logo, o grande ponto de vantagem deste ambiente, é que é gerada uma minimização na alocação de recursos na criada de cada processo, ou seja, tornando a máquina e o sistema, mais capacitados para executar outras tarefas.</p>
+        </ul>
+        <p>Portanto, uso de <i>thread</i> pode ajudar a melhorar o desempenho do sistema operacional, em sistemas cliente-servidor uma solicitação de serviço remoto pode ser executada em uma <i>thread</i> de forma assíncrona, liberando o sistema paa outras tarefas por exemplo. Ou seja, toda a questão de processamento e capacidade de prcessamento do sistema e da máquina, se tornam mais efeitivos com o uso de threads e melhores ainda se com o uso de multi-threads, tanto em questões de performance para execuções de processos e tarefas, como na capacidade da própria máquina, estando mais "leve" para suas operações enquanto kernel ou usuário. Diante disso, existem 2 formas de implementações dessas <i>thread</i>, sendo:</p>
+        <ul>
+            <li>Threads em modo usuário</li>
+                <p><i>thread</i> podem ser criadasatravés de uma biblioteca de funções fora do núcleo do sistema operacional. Neste caso, as <i>thread</i> são implementadas pela aplicação do usuário e não pelo sistema operacional.</p>
+            <li>Thread em modo kernel</li>
+                <p><i>thread</i> podem ser criadas por uma combinação de usuário e kernel. Nesta implementação, um processo pode ter várias <i>thread</i> em modo kernel e cada uma delas, outras <i>thread</i> em modo usuáro.</p>
+        </ul>
+    </body>
+</html>
