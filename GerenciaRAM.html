@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Gerecia de RAM - S.O.</title>
+        <meta name="description" content="Este é um site referênte à estudos sobre S.O.">
+    </head>
+    
+    <body>
+        <h1>Gerenciamento de Memória - Sistemas Operacionais</h1>
+        <p>Como o próprio nome sugere, o gerenciamento de memória é a administração da RAM que é realizada pelo sistema operacional, o qual possui uma peça chave, chamada de <strong>MMU</strong> (ou unidade de gerenciamento de memória), a qual faz a tradução do endereõ lógico gerado pelo processo e o trasnforma em endereço físico, ou seja, <strong>a CPU gera o end. lógico do processo e o passa para o MMU, que irá convete-lo em end. físico e assim acessando a memória</strong>. Portanto, é fácil deduzir que para que um processo seja carregado na memória principal, é preciso que ele passe pelo MMU e gere um end. físico.</p>
+        <p>Esse acesso à emória RAM é feito por uma <strong>carga dinâmica</strong>, onde apenas rotinas e pocessos necessários são carregados na memória, visando não exceder/sobrecarregar a mesma, ou seja, não é sempre que um processo estará carregado na memória, mas apenas nos momentos de real necessidade, uma vez que o excesso de acessos a memória cheia, sua capacidade irá expirar. Por isso que os processos e rotinas são inicialmente <strong>salvos em disco</strong> para que quando surja a necessidade, sejam carregados na memória RAM.</p>
+        <p>Esse procedimento de carega o endereço de um processo/rotina na memória, gerando endereços lógicos e físicos, é realizado por 2 tipos de alocações: <strong>contígua e não-contígua</strong>.</p>
+        <ul>
+            <li><strong>Alocação Contígua</strong></li>
+                <p>Essa alocação é a reservação da área de memória onde é definido um espaço aos processos, ou seja, imagine que a memória principal é como um armário vazia e espaçoso. Assim, sempre que um processo é carregado, é adicionado uma gaveta neste armário (memória) exigindo um certo espaço. Nisso, a memória por default, já possui um espaço de sua capacidade destinada somente ao sistema operacional. Logo, se a RAM tem um espaço total de 36Gb e o S.O. exige uma alocação de 6Gb. Os processos só poderão usar desses 30Gb que sobram. Ou seja, uma memória de forma bruta, possui <strong>uma divisão de 2 espaços, X para o S.O. e o restante para os processos, cargas e rotinas</strong>.</p>
+                <p>Dessa forma, os processos carregados terão os seus <strong>registradores base</strong> (Espaço inicial) e <strong>limite</strong> (Espaço final), definindo o espaço total de alocação usado por tal processo. Logo, se um processo possui uma base de endereço 1000 e limite de 2000, ele só poderá acessar este intervalo de endereços na memória e apenas ele. Segue abaixo uma ilutração dese procedimento de alocação contígua de processos na memória:</p>0
+                <img src="https://danielatllas.github.io/SistemasOperacionais/RAM1">     
+                <p>Então se o processo gera um endereço lógico de valor 100 por exemplo e possui uma base de capacidade 1000 e limite 2000, seu endereço físico será de 1100.</p>
+                <p>Além disso, dentro da alocação contígua, é possível realizar uma alocação <strong>estática ou dinâmica</strong> na memória, onde:</p>
+                <ul>
+                    <li><strong>Estática</strong></li>
+                        <p>É definido uma <strong>partição única</strong> para a alocação, ou seja, uma tamanho fixo de espaço. Por exemplo, imagine uma memória bruta possui o seguinte formato:</p>
+                        <pre>
+                        RAM = 135K
+                 ----------------
+                |       8K       |   -> S.O.
+                 ----------------
+                |       64K      |   -> Partição 1
+                 ----------------
+                |       32K      |   -> Partição 2 
+                 ----------------
+                |       31K      |   -> Partição 3 
+                 ----------------
+                
+                        </pre>
+                        <p>Perceba que a memória possui <strong>partições</strong> com tamanhos já definidos, dessa forma, ela só poderá alocar um processo que caiba neste espaço. Logo, quando um processo é criado. ele tem uma tamanho X (base + limite) e então é alocado na memória desde que caiba em alguma das partições, por exemplo:</p>
+                        <pre>
+                        Processo P1 = 60K
+                        
+                        RAM = 135K
+                 ----------------
+                |       8K       |   -> S.O.
+                 ----------------
+                |       P1       |   -> Partição 1 = Processo P1
+                 ----------------
+                |       32K      |   -> Partição 2 
+                 ----------------
+                |       31K      |   -> Partição 3 
+                 ----------------
+                        </pre>
+                        <p>Agora perceba que a partição continha 64K e o processo exigiu apenas 60K, ou seja, ocorreu uma sobra de 4K desta partição, a qual mesmo não usada, não pode ser acessada por nenhum outro processo. Isso determina a <strong>alocação estática</strong>, pois independente se sobrar espaço, toda aquela partição está reservada exclusivamente para o processo que foi alocado. Essas sobras, sãochamadas de <strong>fragmentações</strong>. Dessa forma, um certo prejuízo pode ser gerado, uma vez que essas partições podem ser geradas e não serão usadas.</p>
+                        <p>Imagine agora uma seunda situação, onde um processo de 10K irá se carregado nesta memória:</p>
+                        <pre>
+                        Processo P1 = 10K
+                        
+                        RAM = 135K
+                 ----------------
+                |       8K       |   -> S.O.
+                 ----------------
+                |       64K      |   -> Partição 1 = ?
+                 ----------------
+                |       32K      |   -> Partição 2 = ?
+                 ----------------
+                |       31K      |   -> Partição 3 = ?
+                 ----------------
+                        </pre>
+                        <p>O processo <i>P1</i> possui tamanho suficiente para ser alocado em qualquer partição. Então, onde ele seria alocado?</p>
+                        <p>É ai onde entra as chamadas <strong>problemas de alocação</strong>, que irão definir em qual partição um processo será alocado, existinte 3 diferentes formas:</p>
+                        <ol>
+                            <strong><li>First-Fit</li></strong>
+                            <p>Aloca o <strong>primeiro bloco livre</strong> que seja grande suficente.</p>
+                            <pre>
+                        Processo P1 = 10K
+                        
+                        RAM = 135K
+                 ----------------
+                |       8K       |   -> S.O.
+                 ----------------
+                |       P1       |   -> Partição 1 = P1 e fragmentação de 54K
+                 ----------------
+                |       32K      |   -> Partição 2 = ?
+                 ----------------
+                |       31K      |   -> Partição 3 = ?
+                 ----------------
+                        </pre>
+                            <br>
+                            <strong><li>Best-Fit</li></strong>
+                            <p>Aloca o <strong>menor bloco livre</strong> que seja grande suficiente.</p>
+                            <pre>
+                        Processo P1 = 10K
+                        
+                        RAM = 135K
+                 ----------------
+                |       8K       |   -> S.O.
+                 ----------------
+                |       64K      |   -> Partição 1 = ?
+                 ----------------
+                |       32K      |   -> Partição 2 = ?
+                 ----------------
+                |       P1       |   -> Partição 3 = P1 e fragmentação de 21K
+                 ----------------
+                        </pre>
+                            <br>
+                            <strong><li>Worst-Fit</li></strong>
+                            <p>Aloca o <strong>maior bloco livre</strong>.</p>
+                            <pre>
+                        Processo P1 = 10K
+                        
+                        RAM = 135K
+                 ----------------
+                |       8K       |   -> S.O.
+                 ----------------
+                |       P1       |   -> Partição 1 = P1 e fragmentação de 54K
+                 ----------------
+                |       32K      |   -> Partição 2 = ?
+                 ----------------
+                |       31K      |   -> Partição 3 = ?
+                 ----------------
+                        </pre>
+                            <br>
+                        </ol>
+                </ul>
+            <li><strong>Estática</strong></li>
+                <p>A alocação dinâmica se difere da estática pela inexistência/ não necessidade de partições de tamanho fixo, ou seja, enquanto houver espaço suficente para que um pocesso seja alocado, a memória contuinuará alocando sem se preocupar com fragmentação, como a seguir:</p>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRI9vPhw7WS1SCUxupnhOTJXmU5A4j7BmCUpXTsHgUmaLNmKlUb&usqp=CAU">
+        </ul>
+    </body>
+</html>
