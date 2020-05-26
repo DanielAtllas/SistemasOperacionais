@@ -121,10 +121,18 @@
                         </pre>
                             <br>
                         </ol>
+                <li><strong>Dinâmica</strong></li>
+                    <p>A alocação dinâmica se difere da estática pela inexistência/ não necessidade de partições de tamanho fixo, ou seja, enquanto houver espaço suficente para que um pocesso seja alocado, a memória contuinuará alocando sem se preocupar com fragmentação, como a seguir:</p>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRI9vPhw7WS1SCUxupnhOTJXmU5A4j7BmCUpXTsHgUmaLNmKlUb&usqp=CAU">
                 </ul>
-            <li><strong>Estática</strong></li>
-                <p>A alocação dinâmica se difere da estática pela inexistência/ não necessidade de partições de tamanho fixo, ou seja, enquanto houver espaço suficente para que um pocesso seja alocado, a memória contuinuará alocando sem se preocupar com fragmentação, como a seguir:</p>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRI9vPhw7WS1SCUxupnhOTJXmU5A4j7BmCUpXTsHgUmaLNmKlUb&usqp=CAU">
+        </ul>
+        <p>Durante o processo de alocação dos processos nas partições da memória, há a possibilidade de que nem todo o espaço disponível da partição seja consumido (como dito anteriormente), fazendo com que um espaço "livre" esteja disponível, onde no caso da alocação dinâmica, esse espaço livre pode ser realocado e mesclado a outras partições livres. Mas no caso da alocação estática, esse espaço "livre" não poderá ser consumido a menos que toda a partição seja liberada.</p>
+        <p>Essas partições livre e restos de partições livre são chamadas de <strong>fragmentação</strong>, a qual pode assumir duas formas:</p>
+        <ul>
+            <li><strong>Fragmentação externa</strong></li>
+                <p>Esta se faz exatamente por todas as partições inteiramente livres, deixando possível a alocação de um processo diferente.</p>
+            <li><strong>Fragmentação interna</strong></li>
+                <p>Esta é exatamente o espaço que sobra após um processo ser alocado na partição, deixando um pequeno resto livre de toda a partição.</p>
         </ul>
     </body>
 </html>
