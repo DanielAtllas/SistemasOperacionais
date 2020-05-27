@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Paginacao - S.O.</title>
+        <meta name="description" content="Este é um site referênte à estudos sobre Sistemas Operacionais">
+    </head>
+    
+    <body>
+        <h1>Partições - Sistemas Operacionais</h1>
+        <p>Como dito anteriormente, o uso dos processos para com a memória principal ocorre através de uma alocação dos recursos do processo, ou seja, ocorrendo um carregamento dos blocos do processo diretamente na memória. Anteriormente foi visto a alocação <strong>contígua</strong>, onde os processos eram alocados de maneira a serem inseridos nas partições livres. As paginações possuem um conceito até semelhante, mas com o uso em alocações <strong>não-contíguas</strong>. Neste caso, o processo não possui necessidade de carregamento total, ou seja, <strong>não é preciso carregar todas as páginas do processo na memória</strong>, apenas partes dele.</p>
+        <p>Assim, a memória RAM é dividida em partes de tamanho fixo, os chamados <strong>frames</strong>. No caso do disco (memória lógica), será dividido o processo em <strong>páginas</strong>, como na ilustração abaixo:</p>
+        <img src="https://danielatllas.github.io/SistemasOperacionais/Pag1.png">
+        <p>É necessário ressaltar que nesta arquitetura, é realizado um <strong>controle de frames livres</strong> da memória, que sevirão como facilitador no processo de alocação, onde obviamente, uma página será apenas alocada em um frame que esteja vago/livre. Diante disso, para executar um programa X, N páginas deverá ser alocadas em N frames da memória (lembrando que neste caso, não há a necessidade de que todas as páginas do processo sejam alocados para que ele seja executado).</p>
+        <p>Durante o procedimento de carga da página em um frame da memória, é também auxiliado um verificador chamado de <strong>tabela de páginas</strong>, o qual possui 2 funções básicas: 1 - Verificar e alocar a página no frame da memória, 2 - Traduzir o endereço lógico para endereço físico. Essa tabela de páginas possuirá 2 colunas, onde serão registrados o <strong>número da página</strong> em questão e o <strong>número do frame</strong> (caso a página não esteja alocada ainda, esta coluna do frame recebe <i>NULL</i>).</p>
+        <p>No procedimento de carregamento da página no frame, é seguido os seguintes passos:</p>
+        <ol>
+            <li>É verificado se na tabela se a página já foi alocada na ram.</li>
+            <ul>
+                <li>Caso sim, é gerado seu endereço físico e segue-se a execução</li>
+                <li>Caso não, é acionada a verificação de frames livres e segue-se ao passo 2</li>
+            </ul>
+            <br>
+            <li>Tendo verificado o frame livre, é alocado no frame o registro/dado dá página em questão</li>
+            <br>
+            <li>É atualizada a tabela, inserindo a página e o frame que foi alocado</li>
+        </ol>
+        <p>Como na seguinte ilustração:</p>
+        <img src="https://danielatllas.github.io/SistemasOperacionais/Pag2.png">
+        <p>Ou seja, a tabela funciona como um verificador, pois se a página preisa ser carregada, é verificado na tabela se a mesma já fi ou não alocada no frame. Caso sim, segue pra tradução de endereço (<strong>casos das páginas 0 e 1</strong>). Caso não, é verificado a existência de um frame livre e realiza-se a alocação, atualizando a tabela (<strong>caso da página 2</strong>). No caso de não haver frames livres, é esperado até a liberação de frame, seja por fim de <i>Quantum</i> ou término de execução do processo.</p>
+        <p>Há também outra forma de verificar a quantidade de páginas de um processo, onde tendo o seu <strong>tamanho do processo</strong> e também o <strong>tamanho de uma página</strong>, é possível calcular essa quantidade de páginas:</p>
+        <pre>
+        Processo = 10k
+        
+        Página = 4k (por página)
+        
+            10/4 = 2,5 ~= 3 páginas de 4k cada
+        </pre>
+        <h3>Tradução de endereço</h3>
+        <p>Como dito anteriormente, a tabela de páginas não apenas funciona como um verificador, mas também como um <strong>tradutor</strong> de endereço lógico para físico, uma vez que durante o carregamento do processo na RAM, esta tradução se faz necessária.</p>
+        <p>O endereço lógico se encontra junto ao processo, no disco. Onde este será dividido em <strong>números de páginas</strong> (ou "P", usado como um <strong>índice</strong>, contendo o endereço base) e o <strong>deslocamento</strong> (ou "d", combinado ao endereço base para definir o endereço físico na memória). Ou seja, o endereço lógico será identificado por um valor binário. Esse valor binário será dividido em 2 partes: Nº de página (p) e deslocamento (d). Cada página do processo, obterá uma quantia X de endereços. O mesmo conceito se dá pelo endereço físico, onde é dividio em 2 partes e é obtido a partir do endereço lógico.</p>
+        <p>Peceba no exemplo abaixo, facilitando o entendimento. Imagine um processo com 256 páginas, onde cada página possui 4 endereços lógicos:</p>
+        <pre>
+        P1
+             ----
+            |    | 0
+             ----
+            |    | 1
+             ----
+            |    | 2  -> Páginas
+             ----
+            .
+            .
+            .
+             ----
+            |    | 255
+             ----
+             
+        Endereço lógico
+                    
+                    p              d
+             ------------------ ------
+            |                  |      |
+             ------------------ ------
+             
+             
+        Supondo-se que cada página tenha 4bytes, podemos verificar que esta possui um total de:
+        4(Bytes por página)x256(Qtd de páginas) = 1024bytes, ou seja, este processo possui um total de 1024 endereços.
+        
+        Quantos bits os endereços deste processo irão possuir?
+            Log 1024 = 10
+               2
+               
+        Ou seja, os endereços lógicos possuem 10 bits cada.
+        
+        
+        Agora imagine que tendo 10 bits, faça a tradução do endereço lógico 1011000011:
+        
+            1 - Devemos descobrir a quantidade de bits no deslocamento: d = log 4(endereço por página) = 2
+                                                                               2
+                   
+            2 - Devemos descobrir a quantidade de bits no nº da página: p = x(total de bits)-d(deslocamento) -> 10-2 = 8 
+            
+            3 - Devemos desenhar a tradução:  1011000011 -> 10110000 = p e 11 = d
+            
+                        p              d
+                  ------------------ ------
+                 |    10110000      |  11  |
+                  ------------------ ------  
+                  
+            Podemos concluir então que o endereço 1011000011 se encontra na página 10110000 ou página 176 (na base 10)      
+        </pre>
+        <p>No exemplo acima, foi mostrado como obter o endereço lógico do processo. Agora, mostraremos como raduzir este endreço lógico em físico. O procedimento é exatamente o mesmo, onde precisaremos da quantidade de bits dos endereços físicos dos frames da memória. Imagine uma memóia com 540 frames, onde cada frame possui 4 endereços:
+        <pre>
+        RAM
+             ----
+            |    | 0
+             ----
+            |    | 1
+             ----
+            |    | 2  -> Frames
+             ----
+            .
+            .
+            .
+             ----
+            |    | 540
+             ----
+             
+        Endereço físico
+                    
+                    f              d
+             ------------------ ------
+            |                  |      |
+             ------------------ ------
+             
+        
+        Suponde-se que a RAM possui 540 frames, podemos verificar que esta possui um total de:
+        4(Bytes por página)540(Qtd de frames) = 2040bytes, ou seja, este processo possui um total de 2040 endereços.
+        
+        Quantos bits os endereços deste processo irão possuir?
+            Log 2040 = 11
+               2
+               
+        Ou seja, os endereços físicos possuem 11 bits cada.
+        
+        Agora, tendo-se o endereço lógico 1011000011, faça a tradução para físico:
+        
+            1 - Devemos descobrir a quantidade de bits no deslocamento: d = log 4(endereço por frame) = 2
+                                                                               2
+                                                                               
+            2 - Devemos descobrir a quantidade de bits no frame: x(total de bits)-d(deslocamento) -> 11-2 = 9  
+            
+            3 - Digamos que a página em questão foi alocada no frame 2, enão devemos desenhar a tradução:  00000001011 -> 000000010 = f(frame 2) e 11 = d (deslocamento de 2 também)
+            
+                        p              d
+                  ------------------ ------
+                 |    000000010     |  11  |
+                  ------------------ ------ 
+                  
+            Podemos concluir então que o endereço 00000001011 se encontra no frame 000000010 ou frame 2 (na base 10)        
+        </pre>
+    </body>
+</html>
